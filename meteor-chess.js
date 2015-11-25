@@ -15,7 +15,7 @@ if (Meteor.isClient) {
       currentGame = Games.findOne(Meteor.users.findOne(Meteor.userId())
                                               .profile.currentGame);
 
-      game = new Chess(currentGame.fen);
+      game = (new Chess(currentGame.fen)) || NEW_GAME_FEN;
 
       if (currentGame) {
         let cfg = {
@@ -53,6 +53,27 @@ if (Meteor.isClient) {
             .findOne(Meteor.userId()).profile.currentGame);
 
       email.val('');
+    },
+  });
+
+  Template.users.helpers({
+    'emails': function getUsers() {
+      let users = Meteor.users.find().fetch();
+      let loggedInUsers = [];
+
+      users.forEach( function getLoggedInUsers(user) {
+        if (user.services.resume.loginTokens.length > 0) {
+          loggedInUsers.push(user)
+        }
+      });
+      
+      let emails = [];
+
+      loggedInUsers.forEach( function emailForEachUser(obj) {
+        emails.push(obj.emails[0]);
+      });
+
+      return emails;
     },
   });
 }

@@ -1,6 +1,5 @@
 <head>
 	<title>Chess</title>
-	<script src="stockfish.js"></script>
 </head>
 <body>
 	{{> loginButtons}}
@@ -9,10 +8,14 @@
 
 	{{> newGame}}
 
-	<div id="board" style="width: 400px"></div>
-	<p>Status: <span id="status"></span></p>
-	<p>FEN: <span id="fen"></span></p>
-	<p>PGN: <span id="pgn"></span></p>
+		<div id="board" style="width: 400px"></div>
+		<p>Status: <span id="status"></span></p>
+		<p>FEN: <span id="fen"></span></p>
+		<p>PGN: <span id="pgn"></span></p>
+
+	{{#if currentUser}}
+		{{> users}}
+	{{/if}}
 </body>
 
 
@@ -20,9 +23,11 @@
 	{{#if currentUser}}
 		{{#if userHasGame}}
 			{{currentGame}}
+
 		{{/if}}
 		<button class="newGame">New Game</button>
 		{{> social}}
+
 	{{/if}}
 </template>
 
@@ -35,3 +40,11 @@
 		<input class="friendInvite" type="email" placeholder="Name of Friend">
 	</form>
 </template>
+
+<template name="users">
+	<ul class="users">
+		{{#each emails}}
+			<li>{{address}}</li>
+		{{/each}} 
+		</ul>
+</template>	
