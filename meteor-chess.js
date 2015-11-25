@@ -14,7 +14,7 @@ if (Meteor.isClient) {
     'currentGame': function getCurrentGame() {
       currentGame = Games.findOne(Meteor.users.findOne(Meteor.userId())
                                               .profile.currentGame);
-      debugger
+
       game = new Chess(currentGame.fen);
 
       if (currentGame) {
