@@ -1,0 +1,36 @@
+<head>
+	<title>Chess</title>
+</head>
+<body>
+	{{> loginButtons}}
+
+	{{> game}}
+
+	{{> newGame}}
+
+	<div id="board" style="width: 400px"></div>
+	<p>Status: <span id="status"></span></p>
+	<p>FEN: <span id="fen"></span></p>
+	<p>PGN: <span id="pgn"></span></p>
+</body>
+
+
+<template name="game">
+	{{#if currentUser}}
+		{{#if userHasGame}}
+			{{currentGame}}
+		{{/if}}
+		<button class="newGame">New Game</button>
+		{{> social}}
+	{{/if}}
+</template>
+
+<template name="newGame">
+
+</template>
+
+<template name='social'>
+	<form class="inviteFriendToGame">
+		<input class="friendInvite" type="email" placeholder="Name of Friend">
+	</form>
+</template>
