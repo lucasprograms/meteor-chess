@@ -8,7 +8,15 @@
 
 
   var onDragStart = function(source, piece, position, orientation) {
-  
+    if (game.turn() === 'w' && Meteor.userId() !== currentGame.player1) {
+      return false;
+    }
+
+    if (currentGame.player2 && game.turn() === 'b' && 
+        Meteor.userId() !== currentGame.player2) {
+      return false;
+    }
+
     if (game.game_over() === true ||
         (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
         (game.turn() === 'b' && piece.search(/^w/) !== -1)) {

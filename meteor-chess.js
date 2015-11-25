@@ -96,6 +96,7 @@ Meteor.methods({
 
   updateUserGame: function updateUserGame(userId, gameId) {
     Meteor.users.update(userId, {$set: {profile: {currentGame: gameId}}});
+    Games.update(gameId, {$set: {player2: userId}});
   },
 });
 

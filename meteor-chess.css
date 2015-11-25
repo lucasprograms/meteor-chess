@@ -24,6 +24,7 @@ ul {
 .status {
   text-align: center;
   margin: 25px;
+  padding-right: 90px;
 }
 
 .users {
