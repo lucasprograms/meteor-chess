@@ -1,4 +1,5 @@
 Games = new Mongo.Collection('games');
+OpenGames = new Mongo.Collection('openGames');
 
 NEW_GAME_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
@@ -8,6 +9,10 @@ if (Meteor.isClient) {
 
   Template.game.helpers({
     'userHasGame': function userHasGame() {
+      if (!Meteor.user().profile) {
+        return false;
+      }
+
       return !!Meteor.user().profile.currentGame;
     },
 
@@ -46,23 +51,45 @@ if (Meteor.isClient) {
       Meteor.call('newGame', newGameId);
       Meteor.call('updateUserGame', Meteor.userId(), newGameId);
     },
+
+    'click .createChallenge': function createChallenge() {
+      newGameId = new Meteor.Collection.ObjectID();
+      OpenGames.insert({_id: newGameId, creatorId: Meteor.userId(),
+                        creatorUsername: Meteor.user().username});
+    },
+  });
+
+  Template.openGames.helpers({
+    'openGames': function openGames() {
+      return OpenGames.find({creatorId: {$ne: Meteor.userId()}});
+    },
+  });
+
+  Template.openGames.events({
+    'click .joinGame': function joinGame(e) {
+      let creatorId = Blaze.getData(e.currentTarget).creatorId;
+      let gameId = Blaze.getData(e.currentTarget)._id;
+
+      Meteor.call('createGame', creatorId, Meteor.userId(), gameId);
+      OpenGames.remove(gameId);
+    },
   });
 
   Template.social.events({
     'submit .inviteFriendToGame': function inviteFriendToGame(e) {
       e.preventDefault();
-      let email = $(e.currentTarget).find('input');
-      let user = Meteor.users.findOne({'emails.address': email.val()});
+      let username = $(e.currentTarget).find('input');
+      let user = Meteor.users.findOne({'username': username.val()});
 
       Meteor.call('updateUserGame', user._id, Meteor.users
             .findOne(Meteor.userId()).profile.currentGame);
 
-      email.val('');
+      username.val('');
     },
   });
 
   Template.users.helpers({
-    'emails': function getUsers() {
+    'users': function getUsers() {
       let users = Meteor.users.find().fetch();
       let loggedInUsers = [];
 
@@ -74,14 +101,12 @@ if (Meteor.isClient) {
         });
       }
 
-      let emails = [];
-
-      loggedInUsers.forEach( function emailForEachUser(obj) {
-        emails.push(obj.emails[0]);
-      });
-
-      return emails;
+      return users;
     },
+  });
+
+  Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_ONLY',
   });
 }
 
@@ -98,6 +123,21 @@ Meteor.methods({
     Meteor.users.update(userId, {$set: {profile: {currentGame: gameId}}});
     Games.update(gameId, {$set: {player2: userId}});
   },
+
+  createGame: function createGame(user1Id, user2Id) {
+    let krampus = new Meteor.Collection.ObjectID();
+
+    Games.insert({
+      _id: krampus,
+      fen: NEW_GAME_FEN,
+      player1: user1Id,
+      player2: user2Id,
+    });
+
+    Meteor.users.update(user1Id, {$set: {profile: {currentGame: krampus}}});
+    Meteor.users.update(user2Id, {$set: {profile: {currentGame: krampus}}});
+  },
+
 });
 
 

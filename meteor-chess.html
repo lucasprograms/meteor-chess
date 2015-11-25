@@ -10,7 +10,7 @@
 		{{> newGame}}
 
 		<div id='board' style='width: 400px'></div>
-		
+
 		{{#if currentUser}}
 			{{> users}}
 		{{/if}}
@@ -19,9 +19,9 @@
 		<p class='status'>Status: <span id='status'></span></p>
 	</div>
 	<div class='open-games'>
-		
-		
+		{{> openGames}}
 	</div>
+
 </body>
 
 <template name='nav'>
@@ -54,6 +54,8 @@
 			{{> social}}
 		</div>
 	{{/if}}
+
+	<button class='createChallenge'>New Challenge</button>
 </template>
 
 <template name='newGame'>
@@ -69,8 +71,18 @@
 <template name='users'>
 	<ul class='users'>
 		<li>Users Currently Logged In</li>
-		{{#each emails}}
-			<li>{{address}}</li>
+		{{#each users}}
+			<li>{{username}}</li>
 		{{/each}} 
 		</ul>
 </template>	
+
+<template name='openGames'>
+	{{#each openGames}}
+		<div>
+			<button class="btn btn-info joinGame">
+				Play against {{creatorUsername}}!
+			</button>
+		</div>
+	{{/each}}
+</template>
