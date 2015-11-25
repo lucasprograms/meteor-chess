@@ -2,8 +2,9 @@
 
 Chess server built with Blaze, Node, and Meteor.
 
-#To do:
+[Live](http://chessly.herokuapp.com)
+
+####To do:
 * Improve styling
 * Timed games
 
-[Live](http://chessly.herokuapp.com)
