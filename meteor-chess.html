@@ -2,47 +2,70 @@
 	<title>Chess</title>
 </head>
 <body>
-	{{> loginButtons}}
+	<div class="group">
+		{{> nav}}
 
-	{{> game}}
+		{{> game}}
 
-	{{> newGame}}
+		{{> newGame}}
 
-		<div id="board" style="width: 400px"></div>
-		<p>Status: <span id="status"></span></p>
-		<p>FEN: <span id="fen"></span></p>
-		<p>PGN: <span id="pgn"></span></p>
-
-	{{#if currentUser}}
-		{{> users}}
-	{{/if}}
+		<div id='board' style='width: 400px'></div>
+		
+		{{#if currentUser}}
+			{{> users}}
+		{{/if}}
+	</div>
+	<div>
+		<p class='status'>Status: <span id='status'></span></p>
+	</div>
+	
 </body>
 
+<template name='nav'>
+	<nav class='navbar navbar-default'>
+		<div class='container-fluid'>
+			<div class='navbar-header'>
+				<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='head-nav-collapse' aria-expaned='false'>
+				<span>1</span>
+				<span>2</span>
+				<span>3</span>
+				<span>4</span>
+				</button>
+				<span class='navbar-brand'>Chess</span>
+				
+				<span>{{> loginButtons}}</span>
+			</div>
 
-<template name="game">
+		</div>	
+
+	</nav>
+</template>
+
+<template name='game'>
 	{{#if currentUser}}
 		{{#if userHasGame}}
 			{{currentGame}}
-
 		{{/if}}
-		<button class="newGame">New Game</button>
-		{{> social}}
-
+		<div class='buttons'>
+			<button class='newGame btn btn-primary'>New Game</button>
+			{{> social}}
+		</div>
 	{{/if}}
 </template>
 
-<template name="newGame">
+<template name='newGame'>
 
 </template>
 
 <template name='social'>
-	<form class="inviteFriendToGame">
-		<input class="friendInvite" type="email" placeholder="Name of Friend">
+	<form class='inviteFriendToGame'>
+		<input class='friendInvite' type='email' placeholder='Invite Friend To Play'>
 	</form>
 </template>
 
-<template name="users">
-	<ul class="users">
+<template name='users'>
+	<ul class='users'>
+		<li>Users Currently Logged In</li>
 		{{#each emails}}
 			<li>{{address}}</li>
 		{{/each}} 

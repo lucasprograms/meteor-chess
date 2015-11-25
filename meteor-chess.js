@@ -15,7 +15,7 @@ if (Meteor.isClient) {
       currentGame = Games.findOne(Meteor.users.findOne(Meteor.userId())
                                               .profile.currentGame);
 
-      game = (new Chess(currentGame.fen)) || NEW_GAME_FEN;
+      game = new Chess(currentGame.fen);
 
       if (currentGame) {
         let cfg = {
@@ -27,7 +27,12 @@ if (Meteor.isClient) {
         };
 
         statusEl = $('#status');
-        board = ChessBoard('board', cfg);
+
+        //no attempt  at board marking before there's a DOM!
+        //could go in an onrendered function?
+        if ($('#board').length !== 0) {
+          board = ChessBoard('board', cfg);
+        }
 
         updateStatus();
       }
@@ -61,12 +66,14 @@ if (Meteor.isClient) {
       let users = Meteor.users.find().fetch();
       let loggedInUsers = [];
 
-      users.forEach( function getLoggedInUsers(user) {
-        if (user.services.resume.loginTokens.length > 0) {
-          loggedInUsers.push(user)
-        }
-      });
-      
+      if (users[0].services) {
+        users.forEach( function getLoggedInUsers(user) {
+          if (user.services.resume.loginTokens.length > 0) {
+            loggedInUsers.push(user);
+          }
+        });
+      }
+
       let emails = [];
 
       loggedInUsers.forEach( function emailForEachUser(obj) {

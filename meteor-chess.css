@@ -1,1 +1,40 @@
 /* CSS declarations go here */
+
+
+
+.group:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+
+body {
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+}
+
+#board {
+  float: left;
+  margin: 0 25px;
+}
+
+.status {
+  text-align: center;
+  margin: 25px;
+}
+
+.users {
+  float: left;
+}
+
+.buttons {
+  float: left;
+}
+
+.inviteFriendToGame {
+  margin: 25px;
+
+}
