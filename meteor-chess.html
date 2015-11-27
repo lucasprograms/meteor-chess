@@ -40,8 +40,9 @@
 </template>
 
 <template name='gameControlButtons'>
-	<button class='btn btn-primary createNewBoard game-control-button'>New Board</button>
-		{{#if currentUser}}
+	{{#if currentUser}}
+		<button class='btn btn-primary createNewBoard game-control-button'>New Board</button>
+		
 		<button class='btn btn-info createNewChallenge game-control-button'>Post New Challenge</button>
 		<button class='btn btn-success inviteFriendToGame game-control-button'>Invite To Game</button>
 	{{/if}}
