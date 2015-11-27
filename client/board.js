@@ -19,7 +19,6 @@ Template.board.helpers({
       orientation = 'black';
     }
 
-
     if (currentGame) {
       let cfg = {
         draggable: true,

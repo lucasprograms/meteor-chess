@@ -7,19 +7,9 @@ if (Meteor.isClient) {
   Accounts.ui.config({
     passwordSignupFields: 'USERNAME_ONLY',
   });
-  
+
   Meteor.subscribe('allUsers');
   Meteor.subscribe('allGames');
-
-  Template.openGames.events({
-    'click .joinGame': function joinGame(e) {
-      let creatorId = Blaze.getData(e.currentTarget).creatorId;
-      let gameId = Blaze.getData(e.currentTarget)._id;
-
-      Meteor.call('createGame', creatorId, Meteor.userId(), gameId);
-      OpenGames.remove(gameId);
-    },
-  });
 
   Template.social.events({
     'submit .inviteFriendToGame': function inviteFriendToGame(e) {
@@ -49,7 +39,7 @@ if (Meteor.isClient) {
 
       return users;
     },
-  });  
+  });
 }
 
 
@@ -63,10 +53,6 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
-    createChallenge: function createNewChallenge() {
-
-    },
-
     createNewBoard: function createNewBoard(gameId) {
       Games.insert({
         _id: gameId,
@@ -90,6 +76,7 @@ if (Meteor.isServer) {
 
       Meteor.users.update(user1Id, {$set: {profile: {currentGame: gameId}}});
       Meteor.users.update(user2Id, {$set: {profile: {currentGame: gameId}}});
+      debugger
     },
   });
 }

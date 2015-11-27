@@ -16,7 +16,7 @@
 			<div class="col-md-1"></div>
 			<div class="col-md-3 challenge-list">{{> challenges}}</div>
 			<div class="col-md-1"></div>
-		</div>	
+		</div>
 	</div>
 </body>
 
@@ -28,15 +28,23 @@
 	<label for="open-challenges">Open Challenges</label>
 	<ul class="open-challenges">
 		{{#each openChallenges}}
-			<li class='open-challenge openChallenge {{#if ownChallenge}}own-challenge{{/if}}'>{{username}} {{> deleteButton}}</li>
+			<li class='open-challenge openChallenge {{#if ownChallenge}}own-challenge{{/if}}'>
+			{{username}}
+
+			{{#if ownChallenge}} 
+				{{> deleteButton}}
+			{{/if}}
+			</li>
 		{{/each}}
 	</ul>
 </template>
 
 <template name='gameControlButtons'>
 	<button class='btn btn-primary createNewBoard game-control-button'>New Board</button>
-	<button class='btn btn-info createNewChallenge game-control-button'>Post New Challenge</button>
-	<button class='btn btn-success inviteFriendToGame game-control-button'>Invite To Game</button>
+		{{#if currentUser}}
+		<button class='btn btn-info createNewChallenge game-control-button'>Post New Challenge</button>
+		<button class='btn btn-success inviteFriendToGame game-control-button'>Invite To Game</button>
+	{{/if}}
 </template>
 
 <template name='deleteButton'>
