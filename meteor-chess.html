@@ -25,7 +25,9 @@
 </template>
 
 <template name='challenges'>
-	<label for="open-challenges">Open Challenges</label>
+	<label for="open-challenges">Open Challenges<span class="badge">
+		{{openChallengeCount}}</span>
+	</label>
 	<ul class="open-challenges">
 		{{#each openChallenges}}
 			<li class='open-challenge openChallenge {{#if ownChallenge}}own-challenge{{/if}}'>

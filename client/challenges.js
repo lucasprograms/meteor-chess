@@ -6,6 +6,10 @@ Template.challenges.helpers({
   'ownChallenge': function isOwnChallenge() {
     return this.creatorId === Meteor.userId();
   },
+
+  'openChallengeCount': function openChallengeCount() {
+    return OpenChallenges.find({}).count();
+  },
 });
 
 Template.challenges.events({
