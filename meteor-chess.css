@@ -17,8 +17,8 @@ ul {
 }
 
 #board {
-  float: left;
-  margin: 0 25px;
+  padding: 0 0 25px 0;
+  display: block;
 }
 
 .status {
@@ -31,10 +31,43 @@ ul {
   float: left;
 }
 
-.buttons {
-  float: left;
+.open-challenge {
+  padding: 15px 0 15px 0;
+  border-top: 1px solid #000000;
+  text-align: left;
 }
 
-.inviteFriendToGame {
-  margin: 25px;
+.open-challenge:last-child {
+  border-bottom: 1px solid #000000;
+}
+
+.own-challenge {
+  color: #cccccc;
+}
+
+.game-control-buttons {
+  padding: 0 0 25px 0;
+}
+
+.challenge-list {
+  padding: 0 10px 25px 0;
+}
+
+.main {
+  margin: 25px 0 0 0;
+}
+
+.remove-item {
+  float: right;
+  padding: 0 10px 0 0;
+  cursor: pointer;
+}
+
+.remove-item:hover {
+  color: #333333;
+}
+
+.game-control-button {
+  width: 150px;
+  margin: 15px 0 0 0;
 }

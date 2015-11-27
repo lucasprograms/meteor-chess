@@ -1,88 +1,44 @@
 <head>
-	<title>Chess</title>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chess.. ly</title>
 </head>
 <body>
-	<div class="group">
-		{{> nav}}
-
-		{{> game}}
-
-		{{> newGame}}
-
-		<div id='board' style='width: 400px'></div>
-
-		{{#if currentUser}}
-			{{> users}}
-		{{/if}}
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-md-12">{{> loginButtons}}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2 game-control-buttons">{{> gameControlButtons}}</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-4" id='board'>{{> board}}</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-3 challenge-list">{{> challenges}}</div>
+			<div class="col-md-1"></div>
+		</div>	
 	</div>
-	<div>
-		<p class='status'>Status: <span id='status'></span></p>
-	</div>
-	<div class='open-games'>
-		{{> openGames}}
-	</div>
-
 </body>
 
-<template name='nav'>
-	<nav class='navbar navbar-default'>
-		<div class='container-fluid'>
-			<div class='navbar-header'>
-				<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='head-nav-collapse' aria-expaned='false'>
-				<span>1</span>
-				<span>2</span>
-				<span>3</span>
-				<span>4</span>
-				</button>
-				<span class='navbar-brand'>Chess</span>
-				
-				<span>{{> loginButtons}}</span>
-			</div>
-
-		</div>	
-
-	</nav>
+<template name='board'>
+	{{currentGame}}
 </template>
 
-<template name='game'>
-	{{#if currentUser}}
-		{{#if userHasGame}}
-			{{currentGame}}
-		{{/if}}
-		<div class='buttons'>
-			<button class='newGame btn btn-primary'>New Game</button>
-			{{> social}}
-		</div>
-	{{/if}}
-
-	<button class='createChallenge'>New Challenge</button>
+<template name='challenges'>
+	<label for="open-challenges">Open Challenges</label>
+	<ul class="open-challenges">
+		{{#each openChallenges}}
+			<li class='open-challenge openChallenge {{#if ownChallenge}}own-challenge{{/if}}'>{{username}} {{> deleteButton}}</li>
+		{{/each}}
+	</ul>
 </template>
 
-<template name='newGame'>
-
+<template name='gameControlButtons'>
+	<button class='btn btn-primary createNewBoard game-control-button'>New Board</button>
+	<button class='btn btn-info createNewChallenge game-control-button'>Post New Challenge</button>
+	<button class='btn btn-success inviteFriendToGame game-control-button'>Invite To Game</button>
 </template>
 
-<template name='social'>
-	<form class='inviteFriendToGame'>
-		<input class='friendInvite' type='text' placeholder='Invite Friend To Play'>
-	</form>
-</template>
-
-<template name='users'>
-	<ul class='users'>
-		<li>Users Currently Logged In</li>
-		{{#each users}}
-			<li>{{username}}</li>
-		{{/each}} 
-		</ul>
-</template>	
-
-<template name='openGames'>
-	{{#each openGames}}
-		<div>
-			<button class="btn btn-info joinGame">
-				Play against {{creatorUsername}}!
-			</button>
-		</div>
-	{{/each}}
+<template name='deleteButton'>
+	<i class='fa fa-remove fa-lg removeItem remove-item'></i>
 </template>
