@@ -18,34 +18,49 @@ Template.challenges.helpers({
   'directChallenges': function directChallengesForUser() {
     return DirectChallenges.find({challengeeId: Meteor.userId()});
   },
+
+  'directChallengerUsername': function directChallengerUsername() {
+    return this.challengerUsername;
+  },
 });
 
 Template.challenges.events({
-  'click .openChallenge': function acceptOpenChallenge(e) {
+  'click .directChallenge': function acceptDirectChallenge() {
     if (!Meteor.user()) {
       throw new Meteor.Error('login-to-accept-challenge');
     }
 
-    let challenge = Blaze.getData(e.currentTarget);
-    let challengeCreatorId = challenge.creatorId;
+    let challengeCreatorId = this.challengerId;
+    let challengeAcceptorId = this.challengeeId;
+
+    if (!Meteor.user()) {
+      throw new Meteor.Error('login-to-accept-challenge');
+    }
 
     if (Meteor.userId() === challengeCreatorId) {
       throw new Meteor.Error('cannot-accept-own-challenge');
     }
 
+    Meteor.call('gameSetup', challengeCreatorId, challengeAcceptorId);
+
+    DirectChallenges.remove(this._id);
+  },
+
+  'click .openChallenge': function acceptOpenChallenge() {
+    let challengeCreatorId = this.creatorId;
     let challengeAcceptorId = Meteor.userId();
 
-    let num = _.random(1);
-
-    if (num === 1) {
-      // challenge creator plays white
-      Meteor.call('createGame', challengeCreatorId, challengeAcceptorId);
-    } else {
-      // challenge creator plays black
-      Meteor.call('createGame', challengeAcceptorId, challengeCreatorId);
+    if (!Meteor.user()) {
+      throw new Meteor.Error('login-to-accept-challenge');
     }
 
-    OpenChallenges.remove(challenge._id);
+    if (Meteor.userId() === challengeCreatorId) {
+      throw new Meteor.Error('cannot-accept-own-challenge');
+    }
+
+    Meteor.call('gameSetup', challengeCreatorId, challengeAcceptorId);
+
+    OpenChallenges.remove(this._id);
   },
 });
 
