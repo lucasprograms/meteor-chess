@@ -1,5 +1,6 @@
 Games = new Mongo.Collection('games');
 OpenChallenges = new Mongo.Collection('openChallenges');
+DirectChallenges = new Mongo.Collection('directChallenges');
 
 NEW_GAME_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
@@ -76,7 +77,12 @@ if (Meteor.isServer) {
 
       Meteor.users.update(user1Id, {$set: {profile: {currentGame: gameId}}});
       Meteor.users.update(user2Id, {$set: {profile: {currentGame: gameId}}});
-      debugger
+    },
+
+    sendInvite: function sendInvite(inviteeId, invitedGame, inviterUsername) {
+      Meteor.users.update(inviteeId,
+                        {$set: {invitedTo: invitedGame,
+                                invitedBy: inviterUsername}});
     },
   });
 }

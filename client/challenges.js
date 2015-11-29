@@ -10,6 +10,10 @@ Template.challenges.helpers({
   'openChallengeCount': function openChallengeCount() {
     return OpenChallenges.find({}).count();
   },
+
+  'isChallenged': function isChallenged() {
+    return !!Meteor.user().invitedTo;
+  },
 });
 
 Template.challenges.events({

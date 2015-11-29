@@ -10,12 +10,11 @@
 			<div class="col-md-12">{{> loginButtons}}</div>
 		</div>
 		<div class="row">
-			<div class="col-md-2 game-control-buttons">{{> gameControlButtons}}</div>
+			<div class="col-md-3 game-control-buttons">{{> gameControlButtons}}</div>
 			<div class="col-md-1"></div>
 			<div class="col-md-4" id='board'>{{> board}}</div>
 			<div class="col-md-1"></div>
 			<div class="col-md-3 challenge-list">{{> challenges}}</div>
-			<div class="col-md-1"></div>
 		</div>
 	</div>
 </body>
@@ -25,12 +24,16 @@
 </template>
 
 <template name='challenges'>
-	<label for="open-challenges">Open Challenges<span class="badge">
+	
+	<label for="open-challenges">Open Challenges<span class="badge challenge-count">
 		{{openChallengeCount}}</span>
 	</label>
 	<ul class="open-challenges">
+		{{#each directChallenges}}
+			<li class='challenge directChallenge'>AAAAAA</li>
+		{{/each}}
 		{{#each openChallenges}}
-			<li class='open-challenge openChallenge {{#if ownChallenge}}own-challenge{{/if}}'>
+			<li class='challenge openChallenge {{#if ownChallenge}}own-challenge{{/if}}'>
 			{{username}}
 
 			{{#if ownChallenge}} 
@@ -41,12 +44,27 @@
 	</ul>
 </template>
 
+<template name='challenge'>
+	<li class='challenge directChallenge'>Challenge from: {{challenger}}</li>
+</template>
+
 <template name='gameControlButtons'>
 	{{#if currentUser}}
 		<button class='btn btn-primary createNewBoard game-control-button'>New Board</button>
 		
 		<button class='btn btn-info createNewChallenge game-control-button'>Post New Challenge</button>
-		<button class='btn btn-success inviteFriendToGame game-control-button'>Invite To Game</button>
+		<button class='btn btn-success game-control-button' data-toggle='collapse' data-target='#inviteFriendInfo' aria-expanded='false' aria-controls='inviteFriendInfo'>Invite To Game</button>
+
+		<div class="collapse" id="inviteFriendInfo">
+		  <form class='form-group inviteToGame'>
+		  	<div class="input-group">
+			    <input class='form-control' placeholder='Enter a Username'>
+			    <span class="input-group-addon" id="basic-addon1">
+			    	<i class="fa fa-send-o"></i>
+			    </span>
+		    </div>
+		  </form>
+		</div>
 	{{/if}}
 </template>
 
