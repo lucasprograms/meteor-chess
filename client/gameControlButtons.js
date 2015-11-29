@@ -24,7 +24,7 @@ Template.gameControlButtons.events({
 
     DirectChallenges.insert({challengerId: Meteor.userId(),
                              challengerUsername: Meteor.user().username,
-                             challengeeId: invitee.fetch()});
+                             challengeeId: inviteeId});
 
     $(e.currentTarget).find('input').val('');
   },

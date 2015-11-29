@@ -14,6 +14,10 @@ Template.challenges.helpers({
   'isChallenged': function isChallenged() {
     return !!Meteor.user().invitedTo;
   },
+
+  'directChallenges': function directChallengesForUser() {
+    return DirectChallenges.find({challengeeId: Meteor.userId()});
+  },
 });
 
 Template.challenges.events({
