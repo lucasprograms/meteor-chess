@@ -5,6 +5,10 @@ Chess server built with Blaze, Node, and Meteor.
 [Live](http://chessly.herokuapp.com)
 
 ####To do:
-* Improve styling
+* more information about match starting, and opponent
 * Timed games
+* Resign and offer draw
+* global chat, chat w/opponent
+
+
 
