@@ -9,8 +9,10 @@ if (Meteor.isClient) {
     passwordSignupFields: 'USERNAME_ONLY',
   });
 
-  Meteor.subscribe('allUsers');
-  Meteor.subscribe('allGames');
+  Meteor.subscribe('users');
+  Meteor.subscribe('games');
+  Meteor.subscribe('openChallenges');
+  Meteor.subscribe('directChallenges');
 
   Template.social.events({
     'submit .inviteFriendToGame': function inviteFriendToGame(e) {
@@ -45,12 +47,20 @@ if (Meteor.isClient) {
 
 
 if (Meteor.isServer) {
-  Meteor.publish('allUsers', function publishUsers() {
+  Meteor.publish('users', function publishUsers() {
     return Meteor.users.find({});
   });
 
-  Meteor.publish('allGames', function publishGames() {
-    return Meteor.games.find({});
+  Meteor.publish('games', function publishGames() {
+    return Games.find({});
+  });
+
+  Meteor.publish('openChallenges', function publishGames() {
+    return OpenChallenges.find({});
+  });
+
+  Meteor.publish('directChallenges', function publishGames() {
+    return DirectChallenges.find({});
   });
 
   Meteor.methods({

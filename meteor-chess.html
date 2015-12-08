@@ -35,9 +35,9 @@
 		{{/if}}
 	</div>
 	<div class='row'>
-		<div class='col-md-3 game-control-buttons'>{{> gameControlButtons}}</div>
+		<div class='col-md-1 game-control-buttons'>{{> gameControlButtons}}</div>
 		<div class='col-md-1'></div>
-		<div class='col-md-4'>
+		<div class='col-md-4' id='board-container'>
 			<h4>{{> currentOpponent}}</h4>
 			<div id='board'>
 				{{> board}}
@@ -45,9 +45,10 @@
 			<h4>{{> currentPlayer}}</h4>
 			<div class='board-divider'></div>
 		</div>
-		<div class='col-md-1'></div>
+		<div class='col-md-3 has-height red'></div>
 		<div class='col-md-3 challenge-list'>{{> challenges}}</div>
 	</div>
+	<div class='row'></div>
 	
 </template>
 

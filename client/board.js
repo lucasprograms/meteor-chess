@@ -35,6 +35,8 @@ Template.board.helpers({
       //could go in an onrendered function?
       if ($('#board').length !== 0) {
         board = ChessBoard('board', cfg);
+        
+        $(window).resize(board.resize);
       }
 
       updateStatus();

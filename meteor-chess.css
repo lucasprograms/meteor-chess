@@ -14,14 +14,17 @@ ul {
   list-style: none;
 }
 
+#board-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 #board {
   display: block;
   margin: 0 auto;
-  max-width: 420px;
 }
 
 .board-b72b1 {
-  width: 420px;
   height: 100%;
   margin: 0 auto;
 }
@@ -83,6 +86,11 @@ ul {
   margin: 15px 80px 0 0px;
 }
 
+.game-control-buttons {
+  position: relative;
+  left: 20px;
+}
+
 .challenge-count {
   margin: 0 0 0 15px;
 }
@@ -102,4 +110,12 @@ ul {
 
 .board-divider {
   margin: 0 0 25px 0;
+}
+
+.has-height {
+  height: 400px;
+}
+
+.red {
+  background: red;
 }
