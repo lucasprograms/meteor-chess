@@ -56,10 +56,8 @@ if (Meteor.isServer) {
   Meteor.methods({
     gameSetup: function gameCreator(player1Id, player2Id) {
       let randomNum = _.random(1);
-      debugger
 
       if (randomNum === 0) {
-        
         Meteor.call('createGame', player1Id, player2Id);
       } else {
         Meteor.call('createGame', player2Id, player1Id);
@@ -78,7 +76,6 @@ if (Meteor.isServer) {
     },
 
     createGame: function createGame(user1Id, user2Id) {
-      debugger
       let gameId = new Meteor.Collection.ObjectID();
 
       Games.insert({
@@ -88,8 +85,8 @@ if (Meteor.isServer) {
         player2: user2Id,
       });
 
-      Meteor.users.update(user1Id, {$set: {profile: {currentGame: gameId}}});
-      Meteor.users.update(user2Id, {$set: {profile: {currentGame: gameId}}});
+      Meteor.users.update(user1Id, {$set: {profile: {currentGame: gameId, currentOpponent: user2Id}}});
+      Meteor.users.update(user2Id, {$set: {profile: {currentGame: gameId, currentOpponent: user1Id}}});
     },
 
     sendInvite: function sendInvite(inviteeId, invitedGame, inviterUsername) {

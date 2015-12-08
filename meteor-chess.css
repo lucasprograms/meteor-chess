@@ -15,8 +15,9 @@ ul {
 }
 
 #board {
-  padding: 0 0 25px 0;
   display: block;
+  margin: 0 auto;
+  max-width: 420px;
 }
 
 .board-b72b1 {
@@ -88,4 +89,17 @@ ul {
 
 #inviteFriendInfo {
   margin: 10px 0 0 20px;
+}
+
+.page-header {
+  margin: 0 0 25px 0;
+  text-align: center;
+}
+
+.logged-in-well {
+  margin: 10px 0 0 0;
+}
+
+.board-divider {
+  margin: 0 0 25px 0;
 }

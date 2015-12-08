@@ -1,34 +1,80 @@
 <head>
-	<meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Chess.. ly</title>
+	<meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+	<title>Chess...ly</title>
 </head>
 <body>
-	<div class="container-fluid main">
-		<div class="row">
-			<div class="col-md-12">{{> loginButtons}}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3 game-control-buttons">{{> gameControlButtons}}</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-4" id='board'>{{> board}}</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-3 challenge-list">{{> challenges}}</div>
-		</div>
+	<div class='container-fluid main'>
+
+		{{> mainDisplay}}
+
 	</div>
 </body>
 
+<template name='mainDisplay'>
+	
+	<div class='row'>
+		{{#if currentUser}}
+			<div class='col-md-3'></div>
+			<div class='col-md-4'>
+				<div class='page-header'><h1>Chess...ly</h1></div>
+			</div>
+			<div class='col-md-2'></div>
+			<div class='col-md-3'>
+				<div class='well logged-in-well'>
+					{{> loginButtons}}
+				</div>
+			</div>
+		{{else}}
+			<div class='jumbotron'>
+        <h1>Chess...ly</h1>
+        <p>A place to play chess with friends! (and frenemies)</p>
+        <div>{{> loginButtons}}</div>
+      </div>
+		{{/if}}
+	</div>
+	<div class='row'>
+		<div class='col-md-3 game-control-buttons'>{{> gameControlButtons}}</div>
+		<div class='col-md-1'></div>
+		<div class='col-md-4'>
+			<h4>{{> currentOpponent}}</h4>
+			<div id='board'>
+				{{> board}}
+			</div>
+			<h4>{{> currentPlayer}}</h4>
+			<div class='board-divider'></div>
+		</div>
+		<div class='col-md-1'></div>
+		<div class='col-md-3 challenge-list'>{{> challenges}}</div>
+	</div>
+	
+</template>
+
 <template name='board'>
-	{{currentGame}}
+  {{#if currentUser}}
+		{{currentGame}}
+	{{/if}}
+</template>
+
+<template name='currentOpponent'>
+	{{#if currentUser}}
+		{{currentOpponent}}
+	{{/if}}
+</template>
+
+<template name='currentPlayer'>
+	{{#if currentUser}}
+		{{currentPlayer}}
+	{{/if}}
 </template>
 
 <template name='challenges'>
-	
-	<label for="open-challenges">Open Challenges<span class="badge challenge-count">
+	{{#if currentUser}}
+	<label for='open-challenges'>Open Challenges<span class='badge challenge-count'>
 		{{openChallengeCount}}</span>
 	</label>
-	<ul class="open-challenges">
+	<ul class='open-challenges'>
 		{{#each directChallenges}}
 			<li class='challenge directChallenge'>Challenge From: {{directChallengerUsername}}</li>
 		{{/each}}
@@ -42,6 +88,7 @@
 			</li>
 		{{/each}}
 	</ul>
+	{{/if}}
 </template>
 
 <template name='challenge'>
@@ -50,24 +97,28 @@
 
 <template name='gameControlButtons'>
 	{{#if currentUser}}
-		<button class='btn btn-primary createNewBoard game-control-button'>New Board</button>
-		
-		<button class='btn btn-info createNewChallenge game-control-button'>Post New Challenge</button>
-		<button class='btn btn-success game-control-button' data-toggle='collapse' data-target='#inviteFriendInfo' aria-expanded='false' aria-controls='inviteFriendInfo'>Invite To Game</button>
+	<button class='btn btn-primary createNewBoard game-control-button'>New Board</button>
+	
+	<button class='btn btn-info createNewChallenge game-control-button'>Post New Challenge</button>
+	<button class='btn btn-success game-control-button' data-toggle='collapse' data-target='#inviteFriendInfo' aria-expanded='false' aria-controls='inviteFriendInfo'>Invite To Game</button>
 
-		<div class="collapse" id="inviteFriendInfo">
-		  <form class='form-group inviteToGame'>
-		  	<div class="input-group">
-			    <input class='form-control' placeholder='Enter a Username'>
-			    <span class="input-group-addon" id="basic-addon1">
-			    	<i class="fa fa-send-o"></i>
-			    </span>
-		    </div>
-		  </form>
-		</div>
+	<div class='collapse' id='inviteFriendInfo'>
+	  <form class='form-group inviteToGame'>
+	  	<div class='input-group'>
+		    <input class='form-control' placeholder='Enter a Username'>
+		    <span class='input-group-addon' id='basic-addon1'>
+		    	<i class='fa fa-send-o'></i>
+		    </span>
+	    </div>
+	  </form>
+	</div>
 	{{/if}}
 </template>
 
 <template name='deleteButton'>
 	<i class='fa fa-remove fa-lg removeItem remove-item'></i>
+</template>
+
+<template name='loginPage'>
+
 </template>
