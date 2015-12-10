@@ -1,0 +1,17 @@
+
+<template name='chatBox'>
+  <button class='btn btn-primary'>CLARK MEH</button>
+  <div class='chat-box' id='chat-box'>
+    {{#each chatMessages}}
+      <div class='chat-message'><strong>{{author}}:</strong> {{body}}</div>
+    {{/each}}
+  </div>
+  {{#if moreResults}}
+    <div id='showMoreResults'>
+      <span class='loading'>Loading...</span>
+    </div>
+  {{/if}}
+  <form class='chat-input-form'>
+    <input class='chat-input' placeholder='Chat'>
+  </form>
+</template>

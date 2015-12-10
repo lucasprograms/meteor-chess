@@ -1,8 +1,5 @@
 Template.currentOpponent.helpers({
-  currentOpponent: function getCurrentOpponent() {
-    let currentOpponent = Meteor.users.find(Meteor.user().profile.currentOpponent).
-                  fetch()[0];
-                  
+  currentOpponent: function getCurrentOpponent() {                  
     if (currentOpponent) {
       return currentOpponent.username;
     }

@@ -4,9 +4,4 @@ Template.challenge.helpers({
   },
 });
 
-Template.challenge.events({
-  'click .directChallenge': function acceptDirectChallenge(e) {
-    debugger
-  },
-});
 

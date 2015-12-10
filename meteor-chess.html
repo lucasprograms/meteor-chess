@@ -45,12 +45,18 @@
 			<h4>{{> currentPlayer}}</h4>
 			<div class='board-divider'></div>
 		</div>
-		<div class='col-md-3 has-height red'></div>
-		<div class='col-md-3 challenge-list'>{{> challenges}}</div>
+		<div class='col-md-3'>
+			
+		</div>
+		<div class='col-md-3 challenge-list'>
+			{{> challenges}}
+			{{> currentGames}}
+		</div>
 	</div>
 	<div class='row'></div>
 	
 </template>
+
 
 <template name='board'>
   {{#if currentUser}}
@@ -89,6 +95,19 @@
 			</li>
 		{{/each}}
 	</ul>
+	{{/if}}
+</template>
+
+<template name="currentGames">
+	{{#if currentUser}}
+		<label for='current-games'>Current Games<span class='badge challenge-count'>
+			{{currentGamesCount}}</span>
+		</label>
+		<ul class='current-games'>
+			{{#each currentGames}}
+				<li class='challenge switchActiveGame'>{{getCurrentOpponent(currentOpponent)}} {{> deleteButton}}</li>
+			{{/each}}
+		</ul>
 	{{/if}}
 </template>
 

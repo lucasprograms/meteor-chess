@@ -21,12 +21,10 @@ ul {
 
 #board {
   display: block;
-  margin: 0 auto;
 }
 
 .board-b72b1 {
   height: 100%;
-  margin: 0 auto;
 }
 
 .status {
@@ -112,10 +110,36 @@ ul {
   margin: 0 0 25px 0;
 }
 
-.has-height {
-  height: 400px;
+.chat-box {
+  position: relative;
+  top: 10px;
+  height: 370px;
+  border: 1px solid #cccccc;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  overflow-y: scroll;
 }
 
-.red {
-  background: red;
+.chat-input {
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 55px;
+  width: 100%;
+  outline: 0;
+  margin: 0 0 25px 0;
+  padding: 5px 0 0 25px;
+}
+
+.chat-message {
+  text-align: left;
+  margin: 15px 0 0 10px;
+  word-wrap: break-word;
+}
+
+.open-challenges {
+  margin-bottom: 40px;
 }

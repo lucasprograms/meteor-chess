@@ -1,6 +1,7 @@
 Games = new Mongo.Collection('games');
 OpenChallenges = new Mongo.Collection('openChallenges');
 DirectChallenges = new Mongo.Collection('directChallenges');
+ChatMessages = new Mongo.Collection('chatMessages')
 
 NEW_GAME_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
@@ -13,6 +14,12 @@ if (Meteor.isClient) {
   Meteor.subscribe('games');
   Meteor.subscribe('openChallenges');
   Meteor.subscribe('directChallenges');
+
+  let CHAT_MESSAGES_INCREMENT = 14;
+
+  Session.setDefault('msgsLimit', CHAT_MESSAGES_INCREMENT);
+
+  Meteor.subscribe('chatMessages', Session.get('msgsLimit'));
 
   Template.social.events({
     'submit .inviteFriendToGame': function inviteFriendToGame(e) {
@@ -45,7 +52,6 @@ if (Meteor.isClient) {
   });
 }
 
-
 if (Meteor.isServer) {
   Meteor.publish('users', function publishUsers() {
     return Meteor.users.find({});
@@ -55,15 +61,40 @@ if (Meteor.isServer) {
     return Games.find({});
   });
 
-  Meteor.publish('openChallenges', function publishGames() {
+  Meteor.publish('openChallenges', function openChallenges() {
     return OpenChallenges.find({});
   });
 
-  Meteor.publish('directChallenges', function publishGames() {
+  Meteor.publish('directChallenges', function directChallenges() {
     return DirectChallenges.find({});
   });
 
+  Meteor.publish('chatMessages', function chatMessages(limit) {
+    return ChatMessages.find({}, { limit: limit });
+  });
+
+  Accounts.onCreateUser(function addCurrentGamesToNewUser(options, user) {
+    user.currentGames = [];
+
+    if (options.profile) {
+      user.profile = options.profile;
+    }
+    return user;
+  });
+
   Meteor.methods({
+    switchCurrentGame: function switchCurrentGame(gameId) {
+      Meteor.users.update(Meteor.user()._id, {$set: {profile: {currentGame: gameId}}});
+    },
+
+    removeCurrentGame: function removeCurrentGame(gameId) {
+      Meteor.users.update(Meteor.user()._id, {$pull: {currentGames: {game: gameId}}});
+    },
+
+    submitChatMessage: function submitChatMessage(msgBody, user) {
+      ChatMessages.insert({body: msgBody, author: user});
+    },
+
     gameSetup: function gameCreator(player1Id, player2Id) {
       let randomNum = _.random(1);
 
@@ -81,12 +112,15 @@ if (Meteor.isServer) {
         player1: Meteor.userId(),
       });
 
-      Meteor.users.update(Meteor.userId(), {$set: {profile:
-                                                  {currentGame: gameId}}});
+      Meteor.users.update(Meteor.userId(), {$set: {profile: {currentGame: gameId}},
+                                    $push: {currentGames: {game: gameId, currentOpponent: null}}});
     },
 
     createGame: function createGame(user1Id, user2Id) {
       let gameId = new Meteor.Collection.ObjectID();
+
+      user1Username = Meteor.users.find(user1Id).fetch()[0].username;
+      user2Username = Meteor.users.find(user2Id).fetch()[0].username;
 
       Games.insert({
         _id: gameId,
@@ -95,8 +129,10 @@ if (Meteor.isServer) {
         player2: user2Id,
       });
 
-      Meteor.users.update(user1Id, {$set: {profile: {currentGame: gameId, currentOpponent: user2Id}}});
-      Meteor.users.update(user2Id, {$set: {profile: {currentGame: gameId, currentOpponent: user1Id}}});
+      Meteor.users.update(user1Id, {$set: {profile: {currentGame: gameId}},
+                                    $push: {currentGames: {game: gameId, currentOpponent: user2Username}}});
+      Meteor.users.update(user2Id, {$set: {profile: {currentGame: gameId}},
+                                    $push: {currentGames: {game: gameId, currentOpponent: user1Username}}});
     },
 
     sendInvite: function sendInvite(inviteeId, invitedGame, inviterUsername) {
