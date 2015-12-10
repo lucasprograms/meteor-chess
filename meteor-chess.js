@@ -1,7 +1,7 @@
 Games = new Mongo.Collection('games');
 OpenChallenges = new Mongo.Collection('openChallenges');
 DirectChallenges = new Mongo.Collection('directChallenges');
-ChatMessages = new Mongo.Collection('chatMessages')
+ChatMessages = new Mongo.Collection('chatMessages');
 
 NEW_GAME_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
