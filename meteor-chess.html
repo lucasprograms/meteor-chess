@@ -38,15 +38,11 @@
 		<div class='col-md-1 game-control-buttons'>{{> gameControlButtons}}</div>
 		<div class='col-md-1'></div>
 		<div class='col-md-4' id='board-container'>
-			<h4>{{> currentOpponent}}</h4>
-			<div id='board'>
-				{{> board}}
-			</div>
-			<h4>{{> currentPlayer}}</h4>
+			{{> gameStatus}}
 			<div class='board-divider'></div>
 		</div>
 		<div class='col-md-3'>
-			
+			{{> chatBox}}
 		</div>
 		<div class='col-md-3 challenge-list'>
 			{{> challenges}}
@@ -57,22 +53,40 @@
 	
 </template>
 
+<template name='chatBox'>
+  <button class='btn btn-primary'>CLARK MEH</button>
+  <div class='chat-box' id='chat-box'>
+    {{#each chatMessages}}
+      <div class='chat-message'><strong>{{author}}:</strong> {{body}}</div>
+    {{/each}}
+  </div>
+  {{#if moreResults}}
+    <div id='showMoreResults'>
+      <span class='loading'>Loading...</span>
+    </div>
+  {{/if}}
+  <form class='chat-input-form'>
+    <input class='chat-input' placeholder='Chat'>
+  </form>
+</template>
+
+<template name='gameStatus'>
+	{{#if currentUser}}
+		<h4>{{currentOpponent}}</h4> 
+	{{/if}}
+
+	<div id='board'>
+		{{> board}}
+	</div>
+
+	{{#if currentUser}}
+		<h4>{{currentPlayer}}</h4>
+	{{/if}}
+</template>
 
 <template name='board'>
   {{#if currentUser}}
 		{{currentGame}}
-	{{/if}}
-</template>
-
-<template name='currentOpponent'>
-	{{#if currentUser}}
-		{{currentOpponent}}
-	{{/if}}
-</template>
-
-<template name='currentPlayer'>
-	{{#if currentUser}}
-		{{currentPlayer}}
 	{{/if}}
 </template>
 
