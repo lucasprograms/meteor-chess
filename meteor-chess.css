@@ -23,6 +23,11 @@ ul {
   display: block;
 }
 
+.board-wrapper {
+  visibility: hidden;
+}
+
+
 .board-b72b1 {
   height: 100%;
 }

@@ -73,9 +73,12 @@
 		<h4>{{currentOpponent}}</h4> 
 	{{/if}}
 
-	<div id='board'>
-		{{> board}}
+	<div class='board-wrapper {{#if currentUser}}not-hidden{{/if}}'>
+		<div id='board'>
+			{{> board}}
+		</div>
 	</div>
+	
 
 	{{#if currentUser}}
 		<h4>{{currentPlayer}}</h4>
