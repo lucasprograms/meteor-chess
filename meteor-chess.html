@@ -54,8 +54,7 @@
 </template>
 
 <template name='chatBox'>
-	  <button class='btn btn-primary test-button'>CLARK MEH</button>
-	  <div class='chat-box {{#if currentUser}}not-hidden{{/if}}' id='chat-box'>
+	  <div class='chat-box {{#if currentUser}}not-hidden{{/if}}' id   ='chat-box'>
 	    {{#each chatMessages}}
 	      <div class='chat-message'><strong>{{author}}:</strong> {{body}}</div>
 	    {{/each}}

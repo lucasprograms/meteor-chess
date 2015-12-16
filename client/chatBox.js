@@ -1,6 +1,6 @@
 Template.chatBox.helpers({
   'chatMessages': function getChatMessages() {
-    return ChatMessages.find({});
+    return ChatMessages.find({}, {sort: {createdAt: 1}});
   },
 
   'moreResults': function moreResults() {
@@ -18,41 +18,34 @@ Template.chatBox.events({
     Meteor.call('submitChatMessage', message, user);
 
     $('.chat-input').val('');
-    setScrollBarToBottom();
-  },
 
-  'click .test-button': function test() {
-    debugger
+    window.setTimeout(function() {
+      setScrollBarToBottom();
+    }, 0);
   },
 });
 
 Template.chatBox.rendered = function onChatBoxRendered() {
-  $('#chat-box').scroll(showMoreVisible);
-
-  // Tracker.autorun(
-  //   Tracker.afterFlush(
-  //     setScrollBarToBottom
-  //   )
-  // );
+  $('#chat-box').scroll(
+    _.throttle(
+      showMoreVisible
+    , 100)
+  );
 };
 
 function showMoreVisible() {
-  let threshold;
-  let target = $('#showMoreResults');
+  window.setTimeout(function() {
+    let chatBox = document.getElementById('chat-box');
 
-  threshold = $('#chat-box').scrollTop() + $('#chat-box').height() - target.height() - $('#chat-box').offset().top;
-
-  if (target.offset().top < threshold) {
-    if (!target.data('visible')) {
-      target.data('visible', true);
+    if (chatBox.scrollTop < 10) {
       Session.set('msgsLimit',
-            Session.get('msgsLimit') + CHAT_MESSAGES_INCREMENT);
-    } else {
-      if (target.data('visible')) {
-        target.data('visible', false);
-      }
+            Session.get('msgsLimit') + 2);
+
+      Meteor.subscribe('chatMessages', Session.get('msgsLimit'));
+
+      chatBox.scrollTop = 11;
     }
-  }
+  }, 0);
 }
 
 function setScrollBarToBottom() {
@@ -60,6 +53,5 @@ function setScrollBarToBottom() {
   let scrollDistanceToBottom = chatBox.scrollHeight -
                                chatBox.clientHeight;
 
-  chatBox.scrollTop = scrollDistanceToBottom;
+   chatBox.scrollTop = scrollDistanceToBottom;
 }
-

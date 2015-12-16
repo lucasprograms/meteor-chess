@@ -48,7 +48,7 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish('chatMessages', function chatMessages(limit) {
-    return ChatMessages.find({}, { limit: limit });
+    return ChatMessages.find({}, {sort: {createdAt: -1}, limit: limit });
   });
 
   Accounts.onCreateUser(function addCurrentGamesToNewUser(options, user) {
@@ -70,7 +70,7 @@ if (Meteor.isServer) {
     },
 
     submitChatMessage: function submitChatMessage(msgBody, user) {
-      ChatMessages.insert({body: msgBody, author: user});
+      ChatMessages.insert({body: msgBody, author: user, createdAt: new Date()});
     },
 
     gameSetup: function gameCreator(player1Id, player2Id) {
