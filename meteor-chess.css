@@ -143,3 +143,19 @@ ul {
 .open-challenges {
   margin-bottom: 40px;
 }
+
+.direct-invitation-field {
+  min-width: 150px;
+  position: relative;
+  right: 20px;
+}
+
+.direct-invitation-button {
+  position: relative;
+  right: 20px;
+  cursor: pointer;
+}
+
+.direct-invitation-button:hover {
+  background: #aaaaaa;
+}

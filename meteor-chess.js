@@ -15,41 +15,11 @@ if (Meteor.isClient) {
   Meteor.subscribe('openChallenges');
   Meteor.subscribe('directChallenges');
 
-  let CHAT_MESSAGES_INCREMENT = 14;
+  let CHAT_MESSAGES_INCREMENT = 15;
 
   Session.setDefault('msgsLimit', CHAT_MESSAGES_INCREMENT);
 
   Meteor.subscribe('chatMessages', Session.get('msgsLimit'));
-
-  Template.social.events({
-    'submit .inviteFriendToGame': function inviteFriendToGame(e) {
-      e.preventDefault();
-      let username = $(e.currentTarget).find('input');
-      let user = Meteor.users.findOne({'username': username.val()});
-
-      Meteor.call('updateUserGame', user._id, Meteor.users
-            .findOne(Meteor.userId()).profile.currentGame);
-
-      username.val('');
-    },
-  });
-
-  Template.users.helpers({
-    'users': function getUsers() {
-      let users = Meteor.users.find().fetch();
-      let loggedInUsers = [];
-
-      if (users[0].services) {
-        users.forEach( function getLoggedInUsers(user) {
-          if (user.services.resume.loginTokens.length > 0) {
-            loggedInUsers.push(user);
-          }
-        });
-      }
-
-      return users;
-    },
-  });
 }
 
 if (Meteor.isServer) {

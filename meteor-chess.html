@@ -54,20 +54,21 @@
 </template>
 
 <template name='chatBox'>
-  <button class='btn btn-primary'>CLARK MEH</button>
-  <div class='chat-box' id='chat-box'>
-    {{#each chatMessages}}
-      <div class='chat-message'><strong>{{author}}:</strong> {{body}}</div>
-    {{/each}}
-  </div>
-  {{#if moreResults}}
-    <div id='showMoreResults'>
-      <span class='loading'>Loading...</span>
-    </div>
+	{{#if currentUser}}
+	  <button class='btn btn-primary test-button'>CLARK MEH</button>
+	  <div class='chat-box' id='chat-box'>
+	    {{#each chatMessages}}
+	      <div class='chat-message'><strong>{{author}}:</strong> {{body}}</div>
+	    {{/each}}
+	  </div>
+	  {{#if moreResults}}
+	    <div id='showMoreResults'>
+	    </div>
+	  {{/if}}
+	  <form class='chat-input-form'>
+	    <input class='chat-input' placeholder='Chat'>
+	  </form>
   {{/if}}
-  <form class='chat-input-form'>
-    <input class='chat-input' placeholder='Chat'>
-  </form>
 </template>
 
 <template name='gameStatus'>
@@ -139,8 +140,8 @@
 	<div class='collapse' id='inviteFriendInfo'>
 	  <form class='form-group inviteToGame'>
 	  	<div class='input-group'>
-		    <input class='form-control' placeholder='Enter a Username'>
-		    <span class='input-group-addon' id='basic-addon1'>
+		    <input class='form-control direct-invitation-field' placeholder='Enter a Username'>
+		    <span class='input-group-addon direct-invitation-button' id='basic-addon1'>
 		    	<i class='fa fa-send-o'></i>
 		    </span>
 	    </div>
