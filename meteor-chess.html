@@ -56,7 +56,7 @@
 <template name='chatBox'>
 	  <div class='chat-box {{#if currentUser}}not-hidden{{/if}}' id   ='chat-box'>
 	    {{#each chatMessages}}
-	      <div class='chat-message group'><strong>{{author}}:</strong> {{body}}<span class='chat-date'>12</span></div>
+	      <div class='chat-message group'><strong>{{author}}:</strong> {{body}}<span class='chat-date'>{{moment}}</span></div>
 	    {{/each}}
 	  </div>
 	  {{#if moreResults}}

@@ -70,7 +70,12 @@ if (Meteor.isServer) {
     },
 
     submitChatMessage: function submitChatMessage(msgBody, user) {
-      ChatMessages.insert({body: msgBody, author: user, createdAt: new Date()});
+      ChatMessages.insert({
+        body: msgBody,
+        author: user,
+        createdAt: new Date(),
+        moment: moment().format('ddd, hA'),
+      });
     },
 
     gameSetup: function gameCreator(player1Id, player2Id) {
