@@ -164,3 +164,9 @@ ul {
 .direct-invitation-button:hover {
   background: #aaaaaa;
 }
+
+.chat-date {
+  color: #cccccc;
+  float: right;
+  margin: 0 20px 0 0;
+}
