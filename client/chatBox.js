@@ -28,11 +28,12 @@ Template.chatBox.events({
 
 Template.chatBox.rendered = function onChatBoxRendered() {
   $('#chat-box').scroll(showMoreVisible);
-  Tracker.autorun(
-    Tracker.afterFlush(
-      setScrollBarToBottom
-    )
-  );
+
+  // Tracker.autorun(
+  //   Tracker.afterFlush(
+  //     setScrollBarToBottom
+  //   )
+  // );
 };
 
 function showMoreVisible() {

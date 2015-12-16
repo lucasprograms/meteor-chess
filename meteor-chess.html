@@ -54,9 +54,8 @@
 </template>
 
 <template name='chatBox'>
-	{{#if currentUser}}
 	  <button class='btn btn-primary test-button'>CLARK MEH</button>
-	  <div class='chat-box' id='chat-box'>
+	  <div class='chat-box {{#if currentUser}}not-hidden{{/if}}' id='chat-box'>
 	    {{#each chatMessages}}
 	      <div class='chat-message'><strong>{{author}}:</strong> {{body}}</div>
 	    {{/each}}
@@ -68,7 +67,6 @@
 	  <form class='chat-input-form'>
 	    <input class='chat-input' placeholder='Chat'>
 	  </form>
-  {{/if}}
 </template>
 
 <template name='gameStatus'>

@@ -19,7 +19,15 @@ if (Meteor.isClient) {
 
   Session.setDefault('msgsLimit', CHAT_MESSAGES_INCREMENT);
 
-  Meteor.subscribe('chatMessages', Session.get('msgsLimit'));
+  Meteor.subscribe('chatMessages', Session.get('msgsLimit'), setScrollBarToBottom);
+}
+
+function setScrollBarToBottom() {
+  let chatBox = document.getElementById('chat-box');
+  let scrollDistanceToBottom = chatBox.scrollHeight -
+                               chatBox.clientHeight;
+
+  chatBox.scrollTop = scrollDistanceToBottom;
 }
 
 if (Meteor.isServer) {
